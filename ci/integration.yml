@@ -1,0 +1,17 @@
+---
+platform: linux
+image_resource:
+  type: docker-image
+  source:
+    repository: alpine
+    tag: "3.10"
+inputs:
+  - name: repo
+run:
+  path: sh
+  args:
+    - -e
+    - -c
+    - |
+      echo "skipping, there are no tests :scream:"
+
