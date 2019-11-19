@@ -40,8 +40,8 @@ type resource struct {
 	// Space the event is related to.
 	Space struct {
 		// GUID is unique identifier for the space where the event occurred. If the event did not occur within a space, the space field will be null.
-		GUID string `json:"guid"`
-	} `json:"space"`
+		GUID string `json:"guid,omitempty"`
+	} `json:"space,omitempty"`
 	// Organization the event is related to.
 	Organization struct {
 		// GUID is unique identifier for the organization where the event occurred. If the event did not occur within an organization, the organization field will be null.
@@ -49,6 +49,8 @@ type resource struct {
 	} `json:"organization"`
 	// CreatedAt is a timestamp representative of when did the event take place.
 	CreatedAt time.Time `json:"created_at"`
+	// UpdatedAt is a timestamp representative of when has the event been modified.
+	UpdatedAt time.Time `json:"modified_at,omitempty"`
 }
 
 type eventsResponse struct {
