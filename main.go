@@ -12,6 +12,11 @@ var (
 		"UAA API URL to be used for authentication.",
 	).Required().Envar("UAA_API_URL").String()
 
+	environment = kingpin.Flag(
+		"environment",
+		"Environment the application will be running in. For instance: prod, stg-lon, jeffj",
+	).Required().Envar("ENVIRONMENT").String()
+
 	uaaClientID = kingpin.Flag(
 		"uaa-client-id",
 		"UAA Client ID for initial client authentication.",
@@ -69,9 +74,10 @@ func main() {
 	}
 
 	shipper := Shipper{
-		Source:    shipLogs,
-		SplunkURL: *splunkURL,
-		SplunkKey: *splunkKey,
+		Source:      shipLogs,
+		Environment: *environment,
+		SplunkURL:   *splunkURL,
+		SplunkKey:   *splunkKey,
 	}
 
 	waiter := sync.WaitGroup{}

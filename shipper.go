@@ -12,7 +12,8 @@ import (
 )
 
 type Shipper struct {
-	Source chan []byte
+	Source      chan []byte
+	Environment string
 
 	SplunkURL string
 	SplunkKey string
@@ -51,7 +52,8 @@ func (s *Shipper) Ship() {
 		case msg := <-s.Source:
 
 			splunkMsg := fmt.Sprintf(
-				`{"source": "logit-to-splunk", "event": %s}`,
+				`{"sourcetype": "audit-events", "source": "%s", "event": %s}`,
+				s.Environment,
 				msg,
 			)
 
