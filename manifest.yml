@@ -7,6 +7,8 @@ applications:
   instances: 1
   buildpack: go_buildpack
   command: ./bin/paas-audit-to-splunk
+  no-route: true
+  health-check-type: process
 
   env:
     GOVERSION: go1.13
