@@ -176,10 +176,13 @@ func (c *Collector) recursivelyGather(response eventsResponse) ([]resource, erro
 		return data, fmt.Errorf("unable to unmarshal authentication response: %s", err)
 	}
 
+	// FIXME: Remove this when there is a persistance for the LastSeenGUID...
+	someHoursAgo := time.Now().Add(-1 * 6 * time.Hour)
+
 	for i, event := range newResponse.Resources {
 		// FIXME: The weird `CreatedAt` based check can go away as soon as there is a persistance for the LastSeenGUID...
 		log.Println(event.CreatedAt)
-		if event.GUID == c.LastSeenGUID || event.CreatedAt.Before(time.Date(2019, 11, 18, 0, 0, 0, 0, time.UTC)) {
+		if event.GUID == c.LastSeenGUID || event.CreatedAt.Before(someHoursAgo) {
 			return append(data, newResponse.Resources[:i]...), nil
 		}
 	}
