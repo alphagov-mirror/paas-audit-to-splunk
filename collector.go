@@ -181,8 +181,8 @@ func (c *Collector) recursivelyGather(response eventsResponse) ([]resource, erro
 
 	for i, event := range newResponse.Resources {
 		// FIXME: The weird `CreatedAt` based check can go away as soon as there is a persistance for the LastSeenGUID...
-		log.Println(event.CreatedAt)
 		if event.GUID == c.LastSeenGUID || event.CreatedAt.Before(someHoursAgo) {
+			log.Printf("Shipped until %s\n", event.CreatedAt)
 			return append(data, newResponse.Resources[:i]...), nil
 		}
 	}
